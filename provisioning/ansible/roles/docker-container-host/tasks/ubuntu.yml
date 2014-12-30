@@ -1,0 +1,31 @@
+---
+
+- name: Install https transport package
+  sudo: yes
+  apt: 
+    name: apt-transport-https 
+    update_cache: yes 
+    state: present
+- name: install docker apt repo key
+  sudo: yes
+  apt_key: keyserver=keyserver.ubuntu.com id=36A1D7869245C8950F966E92D8576A8BA88D21E9 state=present
+- name: install docker apt repo
+  sudo: yes
+  apt_repository:
+    repo: "deb https://get.docker.com/ubuntu docker main"
+    state: present
+- name: install docker
+  sudo: yes
+  apt: 
+    name: "lxc-docker-{{ docker_host_docker_version }}"
+    state: present
+- name: Change Docker run options
+  sudo: yes
+  lineinfile:
+    backup: yes
+    dest: /etc/default/docker
+    regexp: DOCKER_OPTS=
+    line: DOCKER_OPTS="--insecure-registry docker-registry.cloud.platforms.gamesys.corp --storage-driver=devicemapper"
+    state: present
+  notify:
+    - restart docker

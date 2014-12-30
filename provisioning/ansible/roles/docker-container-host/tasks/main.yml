@@ -1,0 +1,23 @@
+---
+
+- name: Docker installation on Ubuntu
+  include: ubuntu.yml
+  when: ansible_distribution == 'Ubuntu'
+- name: Add Docker group
+  sudo: yes
+  group:
+    name: docker
+    state: present
+- name: Add Vagrant user to Docker group
+  sudo: yes
+  user:
+    name: vagrant
+    groups: docker
+  notify:
+    - restart docker
+- name: Start and enable docker service
+  sudo: yes
+  service: 
+    name: docker
+    state: started
+    enabled: yes

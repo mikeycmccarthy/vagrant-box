@@ -1,0 +1,14 @@
+---
+
+- name: Install python pip in Ubuntu
+  sudo: yes
+  apt:
+    name: python-pip
+    state: present
+  when: ansible_distribution == 'Ubuntu'
+
+- name: upgrade pip using pip
+  sudo: yes
+  pip:
+    name: pip
+    state: latest

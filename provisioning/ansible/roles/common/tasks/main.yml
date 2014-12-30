@@ -1,0 +1,3 @@
+---
+- name: Include ansible requirements
+  include: ansible-requirements.yml
