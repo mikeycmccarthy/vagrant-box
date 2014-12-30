@@ -25,7 +25,7 @@
     backup: yes
     dest: /etc/default/docker
     regexp: DOCKER_OPTS=
-    line: DOCKER_OPTS="--insecure-registry docker-registry.cloud.platforms.gamesys.corp --storage-driver=devicemapper"
+    line: DOCKER_OPTS="--insecure-registry docker-registry.cloud.platforms.gamesys.corp --storage-driver=devicemapper -H unix:// -H tcp://0.0.0.0:2375"
     state: present
   notify:
     - restart docker
